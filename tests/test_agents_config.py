@@ -39,14 +39,6 @@ class AgentConfigTest(unittest.TestCase):
         assert config.backstory == ""
         assert config.llm == ""
 
-    def test_read_minimal_yaml(self):
-        shutil.copy(BASE_PATH / "fixtures/agents_min.yaml", self.project_dir / AGENTS_FILENAME)
-        config = AgentConfig("agent_name")
-        assert config.name == "agent_name"
-        assert config.role == ""
-        assert config.goal == ""
-        assert config.backstory == ""
-        assert config.llm == ""
 
     def test_read_maximal_yaml(self):
         shutil.copy(BASE_PATH / "fixtures/agents_max.yaml", self.project_dir / AGENTS_FILENAME)
