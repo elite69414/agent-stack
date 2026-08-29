@@ -22,6 +22,12 @@ class TestAgentStackCLI(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("usage:", result.stderr)
 
+    def test_tools_short_alias_is_not_registered(self):
+        """The top-level tools alias must not collide with other short aliases."""
+        result = run_cli("t")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("invalid choice", result.stderr.lower())
+
     def test_run_command_invalid_project(self):
         """Test the 'run' command on an invalid project."""
         test_dir = Path(BASE_PATH / 'tmp/test_project')

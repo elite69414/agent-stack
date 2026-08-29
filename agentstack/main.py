@@ -119,7 +119,7 @@ def _main():
 
     # 'task' command under 'generate'
     task_parser = generate_subparsers.add_parser(
-        "task", aliases=["t"], help="Generate a task", parents=[global_parser]
+        "task", help="Generate a task", parents=[global_parser]
     )
     task_parser.add_argument("name", help="Name of the task")
     task_parser.add_argument("--description", "-d", help="Description of the task")
@@ -128,7 +128,7 @@ def _main():
     task_parser.add_argument("--position", help="Position to add the task in the stack.")
 
     # 'tools' command
-    tools_parser = subparsers.add_parser("tools", aliases=["t"], help="Manage tools")
+    tools_parser = subparsers.add_parser("tools", help="Manage tools")
 
     # Subparsers under 'tools'
     tools_subparsers = tools_parser.add_subparsers(dest="tools_command", help="Tools commands")
@@ -199,7 +199,7 @@ def _main():
             webbrowser.open("https://docs.agentstack.sh/templates")
         elif args.command in ["init", "i"]:
             init_project(args.slug_name, args.template, args.framework, args.wizard)
-        elif args.command in ["tools", "t"]:
+        elif args.command == "tools":
             if args.tools_command in ["list", "l"]:
                 list_tools()
             elif args.tools_command in ["add", "a"]:
@@ -232,7 +232,7 @@ def _main():
                     llm=args.llm,
                     position=args.position,
                 )
-            elif args.generate_command in ['task', 't']:
+            elif args.generate_command == 'task':
                 add_task(
                     name=args.name,
                     description=args.description,
