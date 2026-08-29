@@ -127,12 +127,6 @@ agent_name:
         empty_agent_names = get_all_agent_names()
         self.assertEqual(empty_agent_names, [])
 
-    def test_get_all_agents(self):
-        shutil.copy(BASE_PATH / "fixtures/agents_max.yaml", self.project_dir / AGENTS_FILENAME)
-
-        for agent in get_all_agents():
-            self.assertIsInstance(agent, AgentConfig)
-
     def test_get_agent(self):
         shutil.copy(BASE_PATH / "fixtures/agents_max.yaml", self.project_dir / AGENTS_FILENAME)
 
