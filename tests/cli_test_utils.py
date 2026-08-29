@@ -7,18 +7,6 @@ def run_cli(*args):
     """Helper method to run the CLI with arguments. Cross-platform."""
     try:
         # Use shell=True on Windows to handle path issues
-        if sys.platform == 'win32':
-            # Add PYTHONIOENCODING to the environment
-            env = os.environ.copy()
-            env['PYTHONIOENCODING'] = 'utf-8'
-            result = subprocess.run(
-                " ".join(str(arg) for arg in CLI_ENTRY + list(args)),
-                capture_output=True,
-                text=True,
-                shell=True,
-                env=env,
-                encoding='utf-8'
-            )
         else:
             result = subprocess.run(
                 [*CLI_ENTRY, *args],
