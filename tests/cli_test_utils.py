@@ -21,6 +21,3 @@ def run_cli(*args):
             print(f"STDERR: {result.stderr}")
             
         return result
-    except Exception as e:
-        print(f"Exception running command: {e}")
-        raise
