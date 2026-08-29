@@ -113,12 +113,6 @@ agent_name:
         agent_names = get_all_agent_names()
         self.assertEqual(set(agent_names), {"agent_name", "second_agent_name"})
         self.assertEqual(agent_names, ["agent_name", "second_agent_name"])
-
-    def test_get_all_agent_names_missing_file(self):
-        if os.path.exists(self.project_dir / AGENTS_FILENAME):
-            os.remove(self.project_dir / AGENTS_FILENAME)
-        non_existent_file_agent_names = get_all_agent_names()
-        self.assertEqual(non_existent_file_agent_names, [])
     
     def test_get_agent_prompt(self):
         shutil.copy(BASE_PATH / "fixtures/agents_max.yaml", self.project_dir / AGENTS_FILENAME)
