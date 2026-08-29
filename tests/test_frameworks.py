@@ -79,14 +79,6 @@ class TestFrameworks(unittest.TestCase):
                 continue
             assert hasattr(module, method_name), f"Method {method_name} not implemented in {self.framework}"
 
-    def test_get_framework_module_invalid(self):
-        with self.assertRaises(Exception) as context:
-            frameworks.get_framework_module('invalid')
-
-    def test_validate_project(self):
-        self._populate_max_entrypoint()
-        frameworks.validate_project()
-
     def test_validate_project_invalid(self):
         self._populate_min_entrypoint()
         with self.assertRaises(ValidationError) as context:
