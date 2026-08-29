@@ -1,11 +1,7 @@
 import os, sys
 import subprocess
 
-CLI_ENTRY = [
-    sys.executable,
-    "-m",
-    "agentstack.main",
-]
+
 
 def run_cli(*args):
     """Helper method to run the CLI with arguments. Cross-platform."""
