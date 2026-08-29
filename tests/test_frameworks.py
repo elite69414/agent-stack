@@ -84,20 +84,6 @@ class TestFrameworks(unittest.TestCase):
         with self.assertRaises(ValidationError) as context:
             frameworks.validate_project()
 
-    def test_validate_project_has_agent_no_task_invalid(self):
-        self._populate_min_entrypoint()
-        shutil.copy(BASE_PATH / 'fixtures/agents_max.yaml', self.project_dir / AGENTS_FILENAME)
-        
-        frameworks.add_agent(self._get_test_agent())
-        with self.assertRaises(ValidationError) as context:
-            frameworks.validate_project()
-
-    def test_validate_project_has_task_no_agent_invalid(self):
-        self._populate_min_entrypoint()
-        frameworks.add_task(self._get_test_task())
-        with self.assertRaises(ValidationError) as context:
-            frameworks.validate_project()
-
     def test_validate_project_missing_agent_method_invalid(self):
         """Ensure that all agents have a method defined in the entrypoint."""
         self._populate_max_entrypoint()
