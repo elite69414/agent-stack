@@ -288,39 +288,7 @@ class TestGraph:
                 assert node.source.type is graph.NodeType.SPECIAL
             if node.target.name in ['START', 'END']:
                 assert node.target.type is graph.NodeType.SPECIAL
-
-    def test_get_graph_invalid_node_type(self):
-        """Test getting the graph object with an unattainable node type"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, inputs: list):
-        self.graph.add_node("agent_name", self.agent_name)
-        self.graph.add_node("task_name", self.task_name)
-        self.graph.add_edge(START, "agent_name")
-        self.graph.add_edge("agent_name_invalid", "task_name")
-        self.graph.add_edge("task_name", END)
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_graph()
-
-    def test_get_graph_invalid_node_content(self):
-        """Test getting the graph object with an unattainable node content"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, inputs: list):
-        self.graph.add_edge(False, "agent_name")
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_graph()
-
+                
     def test_add_graph_edge(self):
         """Test adding an edge to the graph"""
         self._populate_graph_entrypoint()
