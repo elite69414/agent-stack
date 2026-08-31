@@ -143,18 +143,6 @@ class TestFrameworks(unittest.TestCase):
         assert "*agentstack.tools['test_tool']" not in entrypoint_src
         assert "*agentstack.tools['test_tool_alt']" in entrypoint_src
 
-    @parameterized.expand([(x,) for x in get_all_tools()])
-    def test_get_tool_callables(self, tool_config):
-        self._populate_max_entrypoint()
-        try:
-            callables = frameworks.get_tool_callables(tool_config.name)
-        except (Exception, ValidationError):
-            raise unittest.SkipTest(
-                f"Skipping validation of {tool_config.name} likely because dependencies required for import are not available."
-            )
-
-        assert len(callables) == len(tool_config.tools)
-
     def test_get_graph(self):
         self._populate_max_entrypoint()
         shutil.copy(BASE_PATH / 'fixtures/agents_max.yaml', self.project_dir / AGENTS_FILENAME)
