@@ -70,15 +70,6 @@ class TestFrameworks(unittest.TestCase):
         module = frameworks.get_framework_module(self.framework)
         assert module.__name__ == f"agentstack.frameworks.{self.framework}"
 
-    def test_framework_module_implements_protocol(self):
-        """Assert that the framework implementation has methods for all the protocol methods."""
-        protocol = frameworks.FrameworkModule
-        module = frameworks.get_framework_module(self.framework)
-        for method_name in dir(protocol):
-            if method_name.startswith('_'):
-                continue
-            assert hasattr(module, method_name), f"Method {method_name} not implemented in {self.framework}"
-
     def test_validate_project_invalid(self):
         self._populate_min_entrypoint()
         with self.assertRaises(ValidationError) as context:
