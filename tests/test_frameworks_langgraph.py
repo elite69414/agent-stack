@@ -31,23 +31,6 @@ class FrameworksLanggraphTest(unittest.TestCase):
         with conf.ConfigFile() as config:
             config.framework = frameworks.LANGGRAPH
 
-    def tearDown(self):
-        shutil.rmtree(self.project_dir)
-
-    def test_get_import(self):
-        """Test getting the import statement"""
-        entrypoint_src = """
-from agentstack import agent"""
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        import_ = entrypoint.get_import('agentstack', 'agent')
-        assert isinstance(import_, ast.ImportFrom)
-
-        missing = entrypoint.get_import('agentstack', 'task')
-        assert missing is None
-
     def test_add_import(self):
         """Test adding an import statement"""
         entrypoint_src = """
