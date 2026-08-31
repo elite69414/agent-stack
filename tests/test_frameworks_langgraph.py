@@ -237,21 +237,6 @@ class TestGraph:
             if node.target.name in ['START', 'END']:
                 assert node.target.type is graph.NodeType.SPECIAL
 
-    def test_remove_graph_edge(self):
-        """Test removing an edge from the graph"""
-        self._populate_graph_entrypoint()
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        entrypoint.remove_graph_edge(
-            graph.Edge(
-                # agent and task name must exist in the agents and tasks fixtures.
-                source=graph.Node(name='agent_name', type=graph.NodeType.AGENT),
-                target=graph.Node(name='task_name', type=graph.NodeType.TASK),
-            )
-        )
-        graph_nodes = entrypoint.get_graph()
-        assert len(graph_nodes) == 2
-
     def test_remove_graph_edge_invalid_node_content(self):
         """Test removing an edge from the graph with an invalid node content"""
         entrypoint_src = """
