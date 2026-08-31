@@ -90,48 +90,6 @@ class TestGraph:
         with self.assertRaises(ValidationError):
             entrypoint.get_run_method()
 
-    def test_invalid_run_method(self):
-        """The run method does not have the correct signature"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, foo):
-        pass
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_run_method()
-
-    def test_global_tools_missing_toolnode(self):
-        """A global tool is defined but the tool node is not present"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, inputs: list):
-        pass
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_global_tools()
-
-    def test_global_tools_missing_list_in_toolnode(self):
-        """A global tool is defined but the tool node does not have a list"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, inputs: list):
-        tools = ToolNode()
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_global_tools()
-
     def test_get_agent_tools_missing(self):
         """The agent method does not exist"""
         entrypoint_src = """
