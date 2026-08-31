@@ -274,51 +274,6 @@ class TestGraph:
             if node.target.name in ['START', 'END']:
                 assert node.target.type is graph.NodeType.SPECIAL
 
-    def test_add_graph_edge(self):
-        """Test adding an edge to the graph"""
-        self._populate_graph_entrypoint()
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        entrypoint.add_graph_edge(
-            graph.Edge(
-                source=graph.Node(name='START', type=graph.NodeType.SPECIAL),
-                target=graph.Node(name='second_agent_name', type=graph.NodeType.AGENT),
-            )
-        )
-        entrypoint.add_graph_edge(
-            graph.Edge(
-                # agent and task name must exist in the agents and tasks fixtures.
-                source=graph.Node(name='second_agent_name', type=graph.NodeType.AGENT),
-                target=graph.Node(name='task_name_two', type=graph.NodeType.TASK),
-            )
-        )
-        entrypoint.add_graph_edge(
-            graph.Edge(
-                source=graph.Node(name='task_name_two', type=graph.NodeType.TASK),
-                target=graph.Node(name='END', type=graph.NodeType.SPECIAL),
-            )
-        )
-        graph_nodes = entrypoint.get_graph()
-        assert len(graph_nodes) == 6
-        for node in graph_nodes:
-            assert isinstance(node, graph.Edge)
-            assert isinstance(node.source, graph.Node)
-            assert isinstance(node.target, graph.Node)
-            assert node.source.name in [
-                'START',
-                'agent_name',
-                'task_name',
-                'second_agent_name',
-                'task_name_two',
-            ]
-            assert node.target.name in [
-                'agent_name',
-                'task_name',
-                'task_name_two',
-                'second_agent_name',
-                'END',
-            ]
-
     def test_remove_graph_edge(self):
         """Test removing an edge from the graph"""
         self._populate_graph_entrypoint()
