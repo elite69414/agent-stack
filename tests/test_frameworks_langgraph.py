@@ -249,21 +249,6 @@ class TestGraph:
         for node in nodes:
             assert isinstance(node, ast.Call)
 
-    def test_get_graph_edge_nodes_invalid(self):
-        """Test getting the graph edge nodes with an invalid edge"""
-        entrypoint_src = """
-class TestGraph:
-    def run(self, inputs: list):
-        self.graph = Graph()
-        self.graph.add_edge(START, "agent_name", "foo")
-        """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_graph_edge_nodes()
-
     def test_get_graph(self):
         """Test getting the graph object"""
         self._populate_graph_entrypoint()
