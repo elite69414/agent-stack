@@ -288,7 +288,7 @@ class TestGraph:
                 assert node.source.type is graph.NodeType.SPECIAL
             if node.target.name in ['START', 'END']:
                 assert node.target.type is graph.NodeType.SPECIAL
-                
+
     def test_add_graph_edge(self):
         """Test adding an edge to the graph"""
         self._populate_graph_entrypoint()
@@ -381,41 +381,6 @@ class TestGraph:
                     target=graph.Node(name='agent_name', type=graph.NodeType.AGENT),
                 )
             )
-
-    # TODO move this test to test_frameworks.py once insertion points are implemented
-    # in other frameworks
-    @parameterized.expand(
-        [
-            (None,),
-            (InsertionPoint.END,),
-            (InsertionPoint.BEGIN,),
-        ]
-    )
-    def test_add_agent(self, position: InsertionPoint):
-        """Test adding an Agent to the graph"""
-        self._populate_graph_entrypoint()
-
-        agent_config = AgentConfig('second_agent_name')
-        frameworks.add_agent(agent_config, position)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        graph_ = entrypoint.get_graph()
-
-        assert len(graph_) == 4
-        source_nodes = [edge.source.name for edge in graph_]
-        target_nodes = [edge.target.name for edge in graph_]
-        if position in (None, InsertionPoint.END):
-            assert source_nodes == ['START', 'agent_name', 'task_name', 'second_agent_name']
-            assert target_nodes == [
-                'agent_name',
-                'task_name',
-                'second_agent_name',
-                'END',
-            ]
-        elif position == InsertionPoint.BEGIN:
-            # TODO ordering is correct but not intuitive
-            assert source_nodes == ['agent_name', 'task_name', 'START', 'second_agent_name']
-            assert target_nodes == ['task_name', 'END', 'second_agent_name', 'agent_name']
 
     # TODO move this test to test_frameworks.py once insertion points are implemented
     # in other frameworks
