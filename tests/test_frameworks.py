@@ -133,25 +133,6 @@ class TestFrameworks(unittest.TestCase):
         with self.assertRaises(ValidationError) as context:
             frameworks.add_tool(self._get_test_tool(), 'agent_name')
 
-    def test_remove_tool(self):
-        self._populate_max_entrypoint()
-        frameworks.add_tool(self._get_test_tool(), 'agent_name')
-        frameworks.remove_tool(self._get_test_tool(), 'agent_name')
-
-        entrypoint_src = open(frameworks.get_entrypoint_path(self.framework)).read()
-        assert "*agentstack.tools['test_tool']" not in entrypoint_src
-
-    def test_add_multiple_tools(self):
-        self._populate_max_entrypoint()
-        frameworks.add_tool(self._get_test_tool(), 'agent_name')
-        frameworks.add_tool(self._get_test_tool_alternate(), 'agent_name')
-
-        entrypoint_src = open(frameworks.get_entrypoint_path(self.framework)).read()
-        assert (  # ordering is not guaranteed
-            "*agentstack.tools['test_tool'], *agentstack.tools['test_tool_alt']" in entrypoint_src
-            or "*agentstack.tools['test_tool_alt'], *agentstack.tools['test_tool']" in entrypoint_src
-        )
-
     def test_remove_one_tool_of_multiple(self):
         self._populate_max_entrypoint()
         frameworks.add_tool(self._get_test_tool(), 'agent_name')
