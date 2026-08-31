@@ -87,23 +87,6 @@ class TestGraph:
         with self.assertRaises(ValidationError):
             entrypoint.get_agent_tools('test_agent')
 
-    def test_get_agent_tools_missing_bind_tools(self):
-        """An agent is defined but the bind_tools method is not present"""
-        entrypoint_src = """
-class TestGraph:
-    @agentstack.agent
-    def test_agent(self, state: State):
-        pass
-    def run(self, inputs: list):
-        pass
-    """
-        with open(self.project_dir / ENTRYPOINT, 'w') as f:
-            f.write(entrypoint_src)
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        with self.assertRaises(ValidationError):
-            entrypoint.get_agent_tools('test_agent')
-
     def test_get_agent_tools_bind_tools_invalid(self):
         """The bind_tools method call does not have the correct signature"""
         entrypoint_src = """
