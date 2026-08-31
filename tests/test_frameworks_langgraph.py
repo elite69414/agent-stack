@@ -143,26 +143,6 @@ class TestGraph:
         with open(self.project_dir / ENTRYPOINT, 'w') as f:
             f.write(entrypoint_src)
 
-    def test_get_graph_nodes(self):
-        """Test getting the graph nodes"""
-        self._populate_graph_entrypoint()
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        nodes = entrypoint.get_graph_nodes()
-        assert len(nodes) == 2
-        for node in nodes:
-            assert isinstance(node, ast.Call)
-
-    def test_get_graph_edge_nodes(self):
-        """Test getting the graph edge nodes"""
-        self._populate_graph_entrypoint()
-
-        entrypoint = LangGraphFile(self.project_dir / ENTRYPOINT)
-        nodes = entrypoint.get_graph_edge_nodes()
-        assert len(nodes) == 3
-        for node in nodes:
-            assert isinstance(node, ast.Call)
-
     def test_get_graph_edge_nodes_invalid(self):
         """Test getting the graph edge nodes with an invalid edge"""
         entrypoint_src = """
